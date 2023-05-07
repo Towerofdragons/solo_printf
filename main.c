@@ -12,10 +12,17 @@ int main (void)
     unsigned int ui;
     void *addr;
 
-    char str;
-    str = '|';
+    char c;
+    char *str;
 
-    len =  _printf("Let's try to printf a simple sentence %c.\n", str);
+    c = '|';
+    str = "Hello there";
+
+    len = _printf("Let's try to printf a simple sentence.\n");
+    if (len == -1)
+    {
+        write_console("Print failure\n");
+    }
     len2 = printf("Let's try to printf a simple sentence.(generic Printf)\n");
 
     return (0);

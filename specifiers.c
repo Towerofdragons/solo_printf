@@ -3,17 +3,34 @@
 
 //TODO: c,s,%
 
-void printchar(char *arg)
+/**
+ * printchar - convert char to char * then write
+ * @arglist - list of arguements
+ * 
+ * Return: nothing
+*/
+
+void printchar(va_list arg_list)
 {
     //printf("[CHAR HERE]");
-    //replace with writer function
-    write_console("[CHAR HERE]");
-}
-void printstr(char *arg)
-{
 
+    //TODO do some type guarding - if not char, return an error
+    char buff[2];
+    buff[1] = '\0';
+    buff[0] = va_arg(arg_list, int);
+
+    write_console(buff);
 }
-void printliteral(char *arg)
+
+/**
+ * printstr - straight forward forward arg to writer
+ * @
+*/
+void printstr(va_list arg_list)
+{
+    write_console(va_arg(arg_list, char *));
+}
+void printliteral(va_list arg_list)
 {
 
 }

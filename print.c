@@ -7,6 +7,7 @@
  * Return: chars printed excluding null byte
 */
 
+handle_t hConsoleStdOut;
 int _printf(const char *format, ...)
 {
     DWORD written;
@@ -14,7 +15,16 @@ int _printf(const char *format, ...)
 
     int index;
     int list_index;
-    handle_t hConsoleOut;
+  
+    
+    if ((hConsoleStdOut = GetStdHandle(STD_OUTPUT_HANDLE)) == INVALID_HANDLE_VALUE)
+    {
+        WriteFile(hConsoleStdOut, INVALID_HANDLE_ERROR_MSG, strlen(INVALID_HANDLE_ERROR_MSG), &written, NULL);
+        return (-1);
+    }
+
+
+
     char curr_char[2];
     curr_char[1] = '\0';
 
@@ -27,7 +37,6 @@ int _printf(const char *format, ...)
 
     va_start(args,format);
 
-   
     index = 0;
     while (format[index] != '\0')
     {
@@ -36,7 +45,7 @@ int _printf(const char *format, ...)
             if (format[index + 1] == '%')
             {
                 //write literal %
-                break;
+                return (-1);
             }
             else
             {
@@ -47,9 +56,10 @@ int _printf(const char *format, ...)
                 {
                     if (*(options[list_index].specifier) == format[index+1])
                     {
-                        options[list_index].fun_ptr(va_arg(args, char *));
+                        options[list_index].fun_ptr(args);
                     }
                     list_index++;
+                    
                 }
                 
             }
