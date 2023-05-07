@@ -45,7 +45,7 @@ int _printf(const char *format, ...)
             if (format[index + 1] == '%')
             {
                 //write literal %
-                return (-1);
+                write_console("%");
             }
             else
             {
@@ -75,7 +75,7 @@ int _printf(const char *format, ...)
         index++;
     }
 
-    
+    va_end(args);
 
     return (0);
 

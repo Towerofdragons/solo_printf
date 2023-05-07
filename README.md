@@ -26,8 +26,14 @@ ChatGPT says:
 > "No, the write() system call is specific to Unix and Unix-like operating systems, such as Linux and macOS. Windows has a different API for performing similar operations, which is called the Windows API.
 In Windows, you can use functions like WriteFile() or WriteConsole() to write data to a file or console, respectively. These functions are part of the Windows API and can be accessed by including the appropriate header files and linking against the necessary libraries." 
 
+TODO: (Writefile() is used in writer.c:
+writefile needs a handle (in short, a pointer to some element on the operating system e.g a file)
+To ge... )
+
 TODO:
 *custom strlen function : int _strlen(char *str)
+
+
 
 Caveat:
 Looks like in the previous barely functional version, any call to the writer function would request a new file handle. That breaks the function.
@@ -38,9 +44,15 @@ So I'll have to referenc variables across files, hence the ```extern``` keyoword
 Thoughts and new information
 ---
 ---
-``char`` is promoted to int since char has a smaller conversion rank when accessing arguements via va_arg:
+
+
+
+
+> ``char`` is promoted to int since char has a smaller conversion rank when accessing arguements via va_arg:
 
     > If an int can represent all values of the original type (as restricted by the width, for a bit-field), the value is converted to an int; otherwise, it is converted to an unsigned int. These are called the integer promotions. All other types are unchanged by the integer promotions.
 
-Hence instead of retrieving a ``char`` type variable from the variables list, this is used instead.
+> Hence instead of retrieving a ``char`` type variable from the variables list, this is used instead.
     ``va_arg([va_list arguements], int)``
+
+> Running _printf with a format specifier but no accompanying arguement produces **UNDEFINED BEHAVIOUR** like the actual standard printf function. 

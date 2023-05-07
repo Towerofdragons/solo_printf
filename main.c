@@ -25,6 +25,9 @@ int main (void)
     }
     len2 = printf("Let's try to printf a simple sentence.(generic Printf)\n");
 
+    _printf("Let's try to printf a literal %c.\n");
+    printf("Let's try to printf a literal .(generic Printf)\n");
+
     return (0);
 
 }
