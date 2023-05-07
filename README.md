@@ -2,8 +2,24 @@
 
 The semester was a bit hectic so I feel I haven't achieved much mostly relying on my partner. Let' have another crack at this 👍
 
-This is printf adapted for windows
-----
+This ain't gonna be pretty.
+
+Allowed functions and system calls:
+
+    * Writefile || WriteConsole (win32 API replacement for write)
+    * malloc
+    * free
+    * va_start
+    * va_end
+    * va_copy
+    * va_arg
+
+        (anything outside the scope is for debugging... trust me)
+
+This is printf adapted for windows (just uses writefile syscall instead of write)
+---
+---
+
 The linux write() syscall cannot be used on windows 
 ChatGPT says:
 
@@ -19,8 +35,12 @@ New approach -- for every call to _printf() request the STOUT console handle and
 
 So I'll have to referenc variables across files, hence the ```extern``` keyoword can be used in the main.h file.
 
-Thoughts
+Thoughts and new information
 ---
-``char`` is promoted to int since char has a smaller conversion rank:
+---
+``char`` is promoted to int since char has a smaller conversion rank when accessing arguements via va_arg:
 
     > If an int can represent all values of the original type (as restricted by the width, for a bit-field), the value is converted to an int; otherwise, it is converted to an unsigned int. These are called the integer promotions. All other types are unchanged by the integer promotions.
+
+Hence instead of retrieving a ``char`` type variable from the variables list, this is used instead.
+    ``va_arg([va_list arguements], int)``
